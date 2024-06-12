@@ -1,0 +1,59 @@
+{
+  "login": [
+    {
+      "id": 1,
+      "email": "assign123@test.com",
+      "password": "123123123"
+    }
+  ],
+  "signup": [
+    {
+      "id": 1,
+      "nickname": "ment",
+      "email": "assign123@test.com",
+      "password": "123123123"
+    },
+    {
+      "id": "70fb",
+      "nickname": "연습",
+      "email": "aa@test.com",
+      "password": "123"
+    },
+    {
+      "id": "cd2b",
+      "nickname": "d",
+      "email": "d@naver.com",
+      "password": "223123"
+    },
+    {
+      "id": "156c",
+      "nickname": "ddd",
+      "email": "d@naver.com",
+      "password": "ddddd"
+    },
+    {
+      "id": "6480",
+      "nickname": "",
+      "email": "",
+      "password": ""
+    },
+    {
+      "id": "d996",
+      "nickname": "",
+      "email": "",
+      "password": ""
+    },
+    {
+      "id": "9c75",
+      "nickname": "",
+      "email": "",
+      "password": ""
+    },
+    {
+      "id": "7b59",
+      "nickname": "",
+      "email": "",
+      "password": ""
+    }
+  ]
+}

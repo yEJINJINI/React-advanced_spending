@@ -35,7 +35,7 @@ const AddButton = styled.button`
   padding: 8px 20px;
   height: 34px;
   margin-top: 10px;
-  background-color: #007bff;
+  background-color: #82be80;
   color: white;
   border: none;
   border-radius: 4px;
@@ -43,7 +43,7 @@ const AddButton = styled.button`
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &:hover {
-    background-color: #0056b3;
+    background-color: #6d9e6b;
   }
 `;
 

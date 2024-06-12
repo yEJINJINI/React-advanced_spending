@@ -10,10 +10,8 @@ const MonthWrapper = styled.div`
 
 const MonthButton = styled.button`
   text-align: center;
-  font-family: Pretendard, serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 600;
   line-height: normal;
 
   display: flex;
@@ -33,10 +31,10 @@ const MonthButton = styled.button`
   background: ${(props) =>
     !props.selected
       ? "var(--black-alpha-100, #F6F7FA)"
-      : "var(--bg-form, #2EC4B6)"};
+      : "var(--bg-form, #82be80)"};
 
   &:hover {
-    background: #2ec4b6;
+    background: #82be80;
     color: #fff;
   }
 `;

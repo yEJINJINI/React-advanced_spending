@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import MonthNavigation from "../components/MonthNavigation";
 import ExpenseList from "../components/ExpenseList";
 import CreateExpense from "../components/CreateExpense";

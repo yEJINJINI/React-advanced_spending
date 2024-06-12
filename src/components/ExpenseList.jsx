@@ -30,7 +30,7 @@ const ExpenseItem = styled.div`
 
   span:last-child {
     font-weight: bold;
-    color: #007bff;
+    color: green;
     flex-shrink: 0;
   }
 `;
