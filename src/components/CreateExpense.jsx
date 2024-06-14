@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
-import { addExpense } from "../redux/slices/expensesSlice";
-
+import { postExpense } from "../lib/api/expense";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 const InputRow = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -47,7 +47,7 @@ const AddButton = styled.button`
   }
 `;
 
-export default function CreateExpense({ month }) {
+export default function CreateExpense({ month, user }) {
   const dispatch = useDispatch();
   const [newDate, setNewDate] = useState(
     `2024-${String(month).padStart(2, "0")}-01`
@@ -55,6 +55,16 @@ export default function CreateExpense({ month }) {
   const [newItem, setNewItem] = useState("");
   const [newAmount, setNewAmount] = useState("");
   const [newDescription, setNewDescription] = useState("");
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: postExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenses"]);
+      alert("저장되었습니다!");
+    },
+  });
 
   const handleAddExpense = () => {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -76,9 +86,11 @@ export default function CreateExpense({ month }) {
       item: newItem,
       amount: parsedAmount,
       description: newDescription,
+      createdBy: user.userId,
     };
 
-    dispatch(addExpense(newExpense));
+    // dispatch(addExpense(newExpense));
+    mutation.mutate(newExpense);
 
     setNewDate(`2024-${String(month).padStart(2, "0")}-01`);
     setNewItem("");

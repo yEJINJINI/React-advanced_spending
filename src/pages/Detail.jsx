@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { editExpense, deleteExpense } from "../redux/slices/expensesSlice";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getExpense, putExpense, deleteExpense } from "../lib/api/expense";
 
 const Container = styled.div`
   max-width: 800px;
@@ -63,14 +64,47 @@ export default function Detail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const expenses = useSelector((state) => state.expenses);
+  // const expenses = useSelector((state) => state.expenses);
+  // const selectedExpense = expenses.find((element) => element.id === id);
+  const {
+    data: selectedExpense,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["expense", id],
+    queryFn: getExpense,
+  });
 
-  const selectedExpense = expenses.find((element) => element.id === id);
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
 
-  const [date, setDate] = useState(selectedExpense.date);
-  const [item, setItem] = useState(selectedExpense.item);
-  const [amount, setAmount] = useState(selectedExpense.amount);
-  const [description, setDescription] = useState(selectedExpense.description);
+  useEffect(() => {
+    if (selectedExpense) {
+      setDate(selectedExpense.date);
+      setItem(selectedExpense.item);
+      setAmount(selectedExpense.amount);
+      setDescription(selectedExpense.description);
+    }
+  }, [selectedExpense]);
+
+  const mutationEdit = useMutation({
+    mutationFn: putExpense,
+    onSuccess: () => {
+      alert("수정되었습니다!");
+      navigate("/");
+      // queryClient.invalidateQueries(["expenses"]);
+    },
+  });
+
+  const mutationDelete = useMutation({
+    mutationFn: deleteExpense,
+    onSuccess: () => {
+      navigate("/");
+      // queryClient.invalidateQueries(["expenses"]);
+    },
+  });
 
   const handleEdit = () => {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -87,17 +121,16 @@ export default function Detail() {
       id: id,
       date: date,
       item: item,
-      amount: amount,
+      amount: parseInt(amount, 10),
       description: description,
     };
 
-    dispatch(editExpense(newExpense));
-    navigate("/");
+    // dispatch(editExpense(newExpense));
+    mutationEdit.mutate(newExpense);
   };
 
   const handleDelete = () => {
-    dispatch(deleteExpense({ id }));
-    navigate("/");
+    mutationDelete.mutate(id);
   };
 
   return (
